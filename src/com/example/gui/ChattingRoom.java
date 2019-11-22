@@ -7,6 +7,11 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ChattingRoom extends JFrame{
+public class ChattingRoom extends JFrame implements KeyListener {
 	public JPanel p_chatting = new JPanel();
 	public JPanel p_userList = new JPanel();
 	public JPanel chatBar = new JPanel();
@@ -36,6 +41,10 @@ public class ChattingRoom extends JFrame{
 			lb_users[i].setBorder(BorderFactory.createLineBorder(Color.yellow,2));
 			p_userList.add(lb_users[i]);
 		}
+		
+		ta_chatlog.setEditable(false);	//textarea 수정 막음
+		tf_chatting.addKeyListener(this);	//채팅창에서 엔터 클릭 시 기능 
+		
 		chatBar.add(tf_chatting);
 		chatBar.add(btn_send);
 		
@@ -46,10 +55,20 @@ public class ChattingRoom extends JFrame{
 		add(p_userList,BorderLayout.EAST);
 		add(p_chatting,BorderLayout.CENTER);
 		
+		//[보내기]버튼 클릭시 작동
 		btn_send.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("보내기를 눌렀습니다");
+				ta_chatlog.append(tf_chatting.getText() + "\n");
+				tf_chatting.setText("");
+			}
+		});
+		
+		//창이 열리면 자동으로 텍스트 필드에 포커스를 줌
+		addWindowListener(new WindowAdapter() {
+			public void windowOpened(WindowEvent e) {
+				tf_chatting.requestFocus();
 			}
 		});
 	}
@@ -59,5 +78,26 @@ public class ChattingRoom extends JFrame{
 		setBounds(100, 100, 1000, 700);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			System.out.println("엔터키를 눌렀습니다");
+			ta_chatlog.append(tf_chatting.getText() + "\n");
+			tf_chatting.setText("");
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

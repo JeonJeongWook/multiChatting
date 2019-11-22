@@ -10,7 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.example.client.ClientSender;
+import com.example.db.Connection;
+
 public class Register extends JFrame{
+	ClientSender cs;
 	public JPanel panel = new JPanel();
 	public JLabel lb_id = new JLabel("아이디");
 	public JLabel lb_pw = new JLabel("패스워드");
@@ -21,6 +25,7 @@ public class Register extends JFrame{
 	public JButton btn_register = new JButton("회원가입");
 	public JButton btn_back = new JButton("돌아가기");
 	public Register(){
+		Connection db = new Connection();
 		panel.setLayout(new FlowLayout());
 		panel.add(lb_id);
 		panel.add(tf_id);
@@ -38,6 +43,9 @@ public class Register extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("회원가입 클릭");
+				String id = tf_id.getText();
+				String pw = tf_pw.getText();
+				int check = db.doRegister(id, pw);
 			}
 		});
 		

@@ -11,7 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.example.client.ClientMain;
+import com.example.client.ClientSender;
+
 public class Login extends JFrame{
+	ClientSender cs;
 	public JPanel panel = new JPanel();
 	public JTextField tf_id = new JTextField(10); 
 	public JTextField tf_pw = new JTextField(10);
@@ -36,9 +40,11 @@ public class Login extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("로그인 버튼 눌렸습니다");
+				String id = tf_id.getText();
+				String pw = tf_pw.getText();
+				System.out.println(id + "/" + pw);
+				cs.sendMsg("100#" + id + "/" + pw);
 				setVisible(false);
-				ChattingRoom chat = new ChattingRoom();
-				chat.display();
 			}
 		});
 		btn_register.addActionListener(new ActionListener() {
@@ -58,8 +64,14 @@ public class Login extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	public void setSender(ClientSender cs) {
+		this.cs = cs;
+	}
+	
 	public static void main(String[] args) {
 		Login login = new Login();
 		login.display();
+		ClientMain cm = new ClientMain(login);
+		cm.connect();
 	}
 }
