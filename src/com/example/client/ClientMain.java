@@ -21,7 +21,6 @@ public class ClientMain {
 		this.login = login;
 	}
 	public void connect() {
-		System.out.println("ClientMain");
 		try {
 			socket = new Socket("localhost", PORT);
 			ClientReader cr = new ClientReader(socket);

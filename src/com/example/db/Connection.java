@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 public class Connection {
 	String jdbc = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost/multichat?serverTimezone=UTC";
@@ -27,7 +29,6 @@ public class Connection {
 	}
 
 	public int doRegister(String id, String pw) {
-		System.out.println("회원가입 id > " + id + " / pw > " + pw);
 		int check = 0;
 		try {
 			conn = DriverManager.getConnection(url, user, password);
@@ -40,6 +41,9 @@ public class Connection {
 			check = pstm.executeUpdate();	//쿼리실행
 			System.out.println(check);
 		} catch (SQLException e) {
+			if(e.getSQLState().startsWith("23")) {
+				JOptionPane.showMessageDialog(null, "이미 존재하는 아이디 입니다.");
+			}
 			e.getStackTrace();
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -60,6 +64,34 @@ public class Connection {
 				}
 			}
 		}
+		return check;
+	}
+
+	public int doLogin(String id, String pw) {
+		String db_id = "", db_pw = "";
+		int check = 0;	//0-실패 / 1-성공
+		try {
+			conn = DriverManager.getConnection(url, user, password);
+			
+			String sql = "select * from user where id = ?";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, id);
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				db_id = rs.getString("id");
+				db_pw = rs.getString("pw");
+			}
+			if(db_pw.equals(pw)) {
+				System.out.println("비밀번호가 일치합니다");
+				check = 1;
+			}else {
+				System.out.println("비밀번호가 틀렸습니다.");
+				check = 0;
+			}
+		}catch (Exception e) {
+			e.getStackTrace();
+		}
+		System.out.println(db_id + "/" + db_pw);
 		return check;
 	}
 }

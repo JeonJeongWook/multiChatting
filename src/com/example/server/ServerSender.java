@@ -13,7 +13,6 @@ public class ServerSender {
 	
 	public ServerSender() {}
 	public ServerSender(Socket socket) {
-		System.out.println("serverSender");
 		this.socket = socket;
 		
 		try {

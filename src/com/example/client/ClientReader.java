@@ -13,7 +13,7 @@ public class ClientReader implements Runnable {
 	Socket socket;
 	BufferedReader br;
 	PrintWriter pw;
-	Login login;
+	public Login login;
 	
 	public ClientReader() {}
 	public ClientReader(Socket socket) {
@@ -26,6 +26,10 @@ public class ClientReader implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 	
 	@Override
@@ -42,14 +46,23 @@ public class ClientReader implements Runnable {
 					content = st.nextToken();
 					
 					switch (tag) {
-					case 100:
-						
-						break;
-						
-					default:
-						System.out.println("default 진입");
-						break;
+						case 100:
+							System.out.println("로그인");
+							break;
+							
+						case 111:
+							registerResult(content);
+							break;
+							
+						case 119:
+							registerResult(content);
+							break;
+							
+						default:
+							System.out.println("default 진입");
+							break;
 					}
+					System.out.println("content >> " + content);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -58,7 +71,7 @@ public class ClientReader implements Runnable {
 		}
 	}
 	
-	public void setLogin(Login login) {
-		this.login = login;
+	public void registerResult(String content) {
+		login.register.registerResult(content);
 	}
 }

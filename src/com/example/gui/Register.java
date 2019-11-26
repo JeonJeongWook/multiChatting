@@ -7,11 +7,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.example.client.ClientSender;
-import com.example.db.Connection;
 
 public class Register extends JFrame{
 	ClientSender cs;
@@ -25,7 +25,6 @@ public class Register extends JFrame{
 	public JButton btn_register = new JButton("회원가입");
 	public JButton btn_back = new JButton("돌아가기");
 	public Register(){
-		Connection db = new Connection();
 		panel.setLayout(new FlowLayout());
 		panel.add(lb_id);
 		panel.add(tf_id);
@@ -39,13 +38,15 @@ public class Register extends JFrame{
 		panel.add(btn_register);
 		panel.add(btn_back);
 		add(panel);
+		
+		//회원가입 버튼
 		btn_register.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("회원가입 클릭");
 				String id = tf_id.getText();
 				String pw = tf_pw.getText();
-				int check = db.doRegister(id, pw);
+				cs.sendMsg("110#"+id+"/"+pw);
 			}
 		});
 		
@@ -63,5 +64,13 @@ public class Register extends JFrame{
 		setBounds(100, 100, 400, 400);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public void registerResult(String content) {
+		JOptionPane.showMessageDialog(null, content);
+	}
+	
+	public void setSender(ClientSender cs) {
+		this.cs = cs;
 	}
 }

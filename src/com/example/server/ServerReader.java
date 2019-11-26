@@ -11,7 +11,7 @@ import com.example.db.Connection;
 public class ServerReader implements Runnable{
 	//class
 	ServerSender ss;
-	Connection conn;
+	Connection db;
 	//
 	Socket socket;
 	BufferedReader br;
@@ -19,7 +19,6 @@ public class ServerReader implements Runnable{
 	public ServerReader() {
 	}
 	public ServerReader(Socket socket) {
-		System.out.println("serverReader");
 		try {
 			this.socket = socket;
 			
@@ -47,7 +46,7 @@ public class ServerReader implements Runnable{
 		while(true) {
 			try {
 				if((msg = br.readLine())!= null) {
-					System.out.println("from client = "+ msg);
+					System.out.println("클라이언트가 보낸 메시지 : "+ msg);
 					st = new StringTokenizer(msg, "#");
 					tag = Integer.parseInt(st.nextToken());
 					content = st.nextToken();
@@ -55,6 +54,10 @@ public class ServerReader implements Runnable{
 					
 					switch(tag) {
 						case 100 : 
+							doLogin(content);
+							break;
+						case 110 :
+							doRegister(content);
 							break;
 						default :
 							System.out.println("server Reader default진입");
@@ -68,10 +71,41 @@ public class ServerReader implements Runnable{
 			}
 		}
 	}
+	private void doLogin(String content) {
+		System.out.println("login실행");
+		StringTokenizer st = new StringTokenizer(content, "/");
+		String id = st.nextToken();
+		String pw = st.nextToken();
+		int check = db.doLogin(id, pw);
+		System.out.println("ServerReader, doLogin >> " + check);
+	}
+	
+	private void doRegister(String content) {
+		System.out.println("doRegister 실행");
+		StringTokenizer st = new StringTokenizer(content, "/");
+		String id = st.nextToken();
+		String pw = st.nextToken();
+		String tag = "";
+		String msg = "";
+		System.out.println(id + "/" + pw);
+		int check = db.doRegister(id, pw);
+		if(check == 1) {
+			System.out.println("회원가입 완료");
+			tag = "111#";
+			msg = "success";
+		}else {
+			System.out.println("가입 실패");
+			tag = "119#";
+			msg = "가입 실패";
+		}
+		
+		ss.sendMsg(tag+msg);
+	}
+	
 	
 	//setter
-	public void setConnection(Connection conn) {
-		this.conn = conn;
+	public void setConnection(Connection db) {
+		this.db = db;
 	}
 	public void setSender(ServerSender ss) {
 		this.ss = ss;

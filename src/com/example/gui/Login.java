@@ -16,6 +16,8 @@ import com.example.client.ClientSender;
 
 public class Login extends JFrame{
 	ClientSender cs;
+	public Register register;
+	
 	public JPanel panel = new JPanel();
 	public JTextField tf_id = new JTextField(10); 
 	public JTextField tf_pw = new JTextField(10);
@@ -44,14 +46,14 @@ public class Login extends JFrame{
 				String pw = tf_pw.getText();
 				System.out.println(id + "/" + pw);
 				cs.sendMsg("100#" + id + "/" + pw);
-				setVisible(false);
 			}
 		});
 		btn_register.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("회원가입 버튼 눌림");
-				Register register = new Register();
+				register = new Register();
+				register.setSender(cs);
 				register.display();
 			}
 		});
