@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -66,8 +67,14 @@ public class Login extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	public void setSender(ClientSender cs) {
-		this.cs = cs;
+	public void enterRoom() {
+		ChattingRoom chat = new ChattingRoom();
+		chat.display();
+		chat.setSender(cs);
+	}
+	
+	public void loginFail() {
+		JOptionPane.showMessageDialog(null, "로그인 실패");
 	}
 	
 	public static void main(String[] args) {
@@ -75,5 +82,9 @@ public class Login extends JFrame{
 		login.display();
 		ClientMain cm = new ClientMain(login);
 		cm.connect();
+	}
+	
+	public void setSender(ClientSender cs) {
+		this.cs = cs;
 	}
 }

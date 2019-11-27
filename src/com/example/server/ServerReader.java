@@ -64,6 +64,7 @@ public class ServerReader implements Runnable{
 							break;	
 					}
 					//ss.sendAll(msg);
+					System.out.println("==================");
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -76,8 +77,14 @@ public class ServerReader implements Runnable{
 		StringTokenizer st = new StringTokenizer(content, "/");
 		String id = st.nextToken();
 		String pw = st.nextToken();
-		int check = db.doLogin(id, pw);
-		System.out.println("ServerReader, doLogin >> " + check);
+		String result = db.doLogin(id, pw);
+		String tag = "";
+		if(result.equals("")) {
+			tag = "109#";
+		}else {
+			tag = "101#";
+		}
+		ss.sendMsg(tag + result);
 	}
 	
 	private void doRegister(String content) {

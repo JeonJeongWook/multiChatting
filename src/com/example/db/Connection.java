@@ -67,9 +67,9 @@ public class Connection {
 		return check;
 	}
 
-	public int doLogin(String id, String pw) {
+	public String doLogin(String id, String pw) {
 		String db_id = "", db_pw = "";
-		int check = 0;	//0-실패 / 1-성공
+		String result = "";	//""-실패 / 1-성공
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 			
@@ -83,15 +83,15 @@ public class Connection {
 			}
 			if(db_pw.equals(pw)) {
 				System.out.println("비밀번호가 일치합니다");
-				check = 1;
+				result = db_id;
 			}else {
 				System.out.println("비밀번호가 틀렸습니다.");
-				check = 0;
+				result = "";
 			}
 		}catch (Exception e) {
 			e.getStackTrace();
 		}
 		System.out.println(db_id + "/" + db_pw);
-		return check;
+		return result;
 	}
 }

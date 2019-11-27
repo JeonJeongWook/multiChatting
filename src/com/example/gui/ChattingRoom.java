@@ -21,7 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.example.client.ClientSender;
+
 public class ChattingRoom extends JFrame implements KeyListener {
+	ClientSender cs;
 	public JPanel p_chatting = new JPanel();
 	public JPanel p_userList = new JPanel();
 	public JPanel chatBar = new JPanel();
@@ -99,5 +102,9 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setSender(ClientSender cs) {
+		this.cs = cs;
 	}
 }

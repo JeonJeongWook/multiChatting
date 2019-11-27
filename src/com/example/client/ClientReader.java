@@ -46,15 +46,17 @@ public class ClientReader implements Runnable {
 					content = st.nextToken();
 					
 					switch (tag) {
-						case 100:
-							System.out.println("로그인");
+						case 101:
+							loginAuth();
+							break;
+						case 109:
+							loginFail();
 							break;
 							
-						case 111:
+						case 111:	//회원가입 성공
 							registerResult(content);
 							break;
-							
-						case 119:
+						case 119:	//회원가입 실패
 							registerResult(content);
 							break;
 							
@@ -69,6 +71,15 @@ public class ClientReader implements Runnable {
 				break;
 			}
 		}
+	}
+	
+	public void loginAuth() {
+		login.setVisible(false);
+		login.enterRoom();
+	}
+	
+	public void loginFail() {
+		login.loginFail();
 	}
 	
 	public void registerResult(String content) {
