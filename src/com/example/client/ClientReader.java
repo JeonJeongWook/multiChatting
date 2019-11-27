@@ -65,7 +65,7 @@ public class ClientReader implements Runnable {
 							registerResult(content);
 							break;
 							
-						case 201:
+						case 211:
 							receiveChat(content);
 							break;
 							
@@ -86,13 +86,8 @@ public class ClientReader implements Runnable {
 	public void loginAuth(String content) {
 		login.setVisible(false);
 		login.enterRoom();
-		System.out.println("서버에서 받음");
 		StringTokenizer st = new StringTokenizer(content, "/");
-		int seat = Integer.parseInt(st.nextToken());
-		String id = st.nextToken();
 		
-		
-		login.chat.lb_users[seat].setText(id);
 	}
 	
 	public void loginFail() {

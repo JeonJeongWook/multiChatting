@@ -66,7 +66,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 				System.out.println("보내기를 눌렀습니다");
 				String msg = tf_chatting.getText();
 //				ta_chatlog.append(tf_chatting.getText() + "\n");
-				cs.sendMsg("200#"+msg);
+				cs.sendMsg("210#"+msg);
 				tf_chatting.setText("");
 			}
 		});

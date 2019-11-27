@@ -6,10 +6,10 @@ import java.util.HashMap;
 
 public class SocketList {
 	ArrayList<Socket> map;
-	
-	int num = 0;
+	ArrayList<String> user;
 	public SocketList() {
 		map = new ArrayList<Socket>();
+		user = new ArrayList<String>();
 	}
 	
 	public void addUser(Socket pw) {

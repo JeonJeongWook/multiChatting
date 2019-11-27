@@ -91,14 +91,10 @@ public class ServerReader implements Runnable{
 		String tag = "";
 		if(name.equals("")) {
 			tag = "109#";
-			ss.sendMsg(tag + name);
 		}else {
 			tag = "101#";
-			int seat = ul.countUser();
-			ul.addUser(name);
-			System.out.println("userlist >> " + ul.getUserList());
-			ss.sendMsg(tag + seat + "/" + name);
 		}
+		ss.sendMsg(tag + name);
 	}
 	
 	private void doRegister(String content) {
