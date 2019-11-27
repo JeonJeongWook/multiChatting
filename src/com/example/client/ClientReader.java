@@ -60,6 +60,11 @@ public class ClientReader implements Runnable {
 							registerResult(content);
 							break;
 							
+						case 201:
+							receiveChat(content);
+							break;
+							
+							
 						default:
 							System.out.println("default 진입");
 							break;
@@ -73,6 +78,7 @@ public class ClientReader implements Runnable {
 		}
 	}
 	
+	
 	public void loginAuth() {
 		login.setVisible(false);
 		login.enterRoom();
@@ -84,5 +90,9 @@ public class ClientReader implements Runnable {
 	
 	public void registerResult(String content) {
 		login.register.registerResult(content);
+	}
+	
+	private void receiveChat(String content) {
+		login.chat.receiveChat(content);
 	}
 }

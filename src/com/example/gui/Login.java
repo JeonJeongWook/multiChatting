@@ -18,7 +18,7 @@ import com.example.client.ClientSender;
 public class Login extends JFrame{
 	ClientSender cs;
 	public Register register;
-	
+	public ChattingRoom chat;
 	public JPanel panel = new JPanel();
 	public JTextField tf_id = new JTextField(10); 
 	public JTextField tf_pw = new JTextField(10);
@@ -68,7 +68,7 @@ public class Login extends JFrame{
 	}
 	
 	public void enterRoom() {
-		ChattingRoom chat = new ChattingRoom();
+		chat = new ChattingRoom();
 		chat.display();
 		chat.setSender(cs);
 	}

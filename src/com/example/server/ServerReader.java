@@ -12,6 +12,8 @@ public class ServerReader implements Runnable{
 	//class
 	ServerSender ss;
 	Connection db;
+	SocketList sl;
+	
 	//
 	Socket socket;
 	BufferedReader br;
@@ -50,7 +52,8 @@ public class ServerReader implements Runnable{
 					st = new StringTokenizer(msg, "#");
 					tag = Integer.parseInt(st.nextToken());
 					content = st.nextToken();
-					System.out.println("content = "+content +"/tag = "+tag);
+					System.out.println("tag :: " + tag);
+					System.out.println("content :: " + content);
 					
 					switch(tag) {
 						case 100 : 
@@ -59,6 +62,11 @@ public class ServerReader implements Runnable{
 						case 110 :
 							doRegister(content);
 							break;
+							
+						case 200:
+							sendChat(content);
+							break;
+							
 						default :
 							System.out.println("server Reader default진입");
 							break;	
@@ -72,6 +80,7 @@ public class ServerReader implements Runnable{
 			}
 		}
 	}
+	
 	private void doLogin(String content) {
 		System.out.println("login실행");
 		StringTokenizer st = new StringTokenizer(content, "/");
@@ -109,6 +118,12 @@ public class ServerReader implements Runnable{
 		ss.sendMsg(tag+msg);
 	}
 	
+	private void sendChat(String content) {
+		System.out.println("content > " + content);
+		String tag = "201#";
+		ss.sendAll(tag + content);
+		
+	}
 	
 	//setter
 	public void setConnection(Connection db) {

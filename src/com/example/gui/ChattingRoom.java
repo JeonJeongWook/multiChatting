@@ -63,7 +63,9 @@ public class ChattingRoom extends JFrame implements KeyListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("보내기를 눌렀습니다");
-				ta_chatlog.append(tf_chatting.getText() + "\n");
+				String msg = tf_chatting.getText();
+//				ta_chatlog.append(tf_chatting.getText() + "\n");
+				cs.sendMsg("200#"+msg);
 				tf_chatting.setText("");
 			}
 		});
@@ -87,7 +89,9 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			System.out.println("엔터키를 눌렀습니다");
-			ta_chatlog.append(tf_chatting.getText() + "\n");
+			String msg = tf_chatting.getText();
+//			ta_chatlog.append(tf_chatting.getText() + "\n");
+			cs.sendMsg("200#"+msg);
 			tf_chatting.setText("");
 		}
 	}
@@ -95,16 +99,18 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	public void setSender(ClientSender cs) {
 		this.cs = cs;
+	}
+	
+	public void receiveChat(String content) {
+		ta_chatlog.append(content+"\n");
 	}
 }

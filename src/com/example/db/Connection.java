@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+import com.example.server.UserList;
+
 public class Connection {
 	String jdbc = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost/multichat?serverTimezone=UTC";
@@ -18,6 +20,8 @@ public class Connection {
 	Statement stmt = null;
 	java.sql.Connection conn = null;
 	PreparedStatement pstm = null;
+	
+	UserList ul;
 	
 	public Connection() {
 		try {
@@ -84,6 +88,7 @@ public class Connection {
 			if(db_pw.equals(pw)) {
 				System.out.println("비밀번호가 일치합니다");
 				result = db_id;
+				ul.addUser(db_id);
 			}else {
 				System.out.println("비밀번호가 틀렸습니다.");
 				result = "";
