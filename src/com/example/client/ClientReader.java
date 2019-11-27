@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
+import com.example.gui.ChattingRoom;
 import com.example.gui.Login;
 
 public class ClientReader implements Runnable {
@@ -14,6 +15,8 @@ public class ClientReader implements Runnable {
 	BufferedReader br;
 	PrintWriter pw;
 	public Login login;
+	
+	String nick = "";
 	
 	public ClientReader() {}
 	public ClientReader(Socket socket) {
@@ -44,10 +47,12 @@ public class ClientReader implements Runnable {
 					st = new StringTokenizer(msg, "#");
 					tag = Integer.parseInt(st.nextToken());
 					content = st.nextToken();
-					
+
+					System.out.println("tag :: " + tag);
+					System.out.println("content :: " + content);
 					switch (tag) {
 						case 101:
-							loginAuth();
+							loginAuth(content);
 							break;
 						case 109:
 							loginFail();
@@ -64,12 +69,11 @@ public class ClientReader implements Runnable {
 							receiveChat(content);
 							break;
 							
-							
 						default:
 							System.out.println("default 진입");
 							break;
 					}
-					System.out.println("content >> " + content);
+					System.out.println("==================");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -79,9 +83,16 @@ public class ClientReader implements Runnable {
 	}
 	
 	
-	public void loginAuth() {
+	public void loginAuth(String content) {
 		login.setVisible(false);
 		login.enterRoom();
+		System.out.println("서버에서 받음");
+		StringTokenizer st = new StringTokenizer(content, "/");
+		int seat = Integer.parseInt(st.nextToken());
+		String id = st.nextToken();
+		
+		
+		login.chat.lb_users[seat].setText(id);
 	}
 	
 	public void loginFail() {
@@ -92,7 +103,9 @@ public class ClientReader implements Runnable {
 		login.register.registerResult(content);
 	}
 	
+	//채팅 받기
 	private void receiveChat(String content) {
 		login.chat.receiveChat(content);
 	}
+	
 }

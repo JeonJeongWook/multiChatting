@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 import com.example.db.Connection;
 
@@ -16,9 +17,11 @@ public class ServerMain {
 	BufferedReader br;
 	Connection conn;
 	SocketList sl;
+	UserList ul;
 	
 	public ServerMain() {
 		System.out.println("ServerMain 서버시작");
+		
 	}
 	
 	public void connection() {
@@ -26,7 +29,7 @@ public class ServerMain {
 			conn = new Connection();
 			server = new ServerSocket(PORT);
 			sl = new SocketList();
-			
+			ul = new UserList();
 			while(true) {
 				System.out.println("대기중");
 				Socket socket = server.accept();
@@ -37,8 +40,10 @@ public class ServerMain {
 				sl.addUser(socket);
 				
 				sr.setSender(ss);
-				sr.setConnection(conn); 
+				sr.setConnection(conn);
 				ss.setList(sl);
+				
+				sr.setUserList(ul);
 			}
 			
 			

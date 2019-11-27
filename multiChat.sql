@@ -6,3 +6,5 @@ create table user(
     pw varchar(20) not null
 );
 select * from user;
+select * from user where id = 123 and pw = 123;
+update user set pw = 'asd' where id = 'asd';

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import com.example.db.Connection;
@@ -13,17 +14,18 @@ public class ServerReader implements Runnable{
 	ServerSender ss;
 	Connection db;
 	SocketList sl;
+	UserList ul;
+	
 	
 	//
 	Socket socket;
 	BufferedReader br;
-	String nickname = "";
+//	String nickname = "";
 	public ServerReader() {
 	}
 	public ServerReader(Socket socket) {
 		try {
 			this.socket = socket;
-			
 			///
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
@@ -52,9 +54,9 @@ public class ServerReader implements Runnable{
 					st = new StringTokenizer(msg, "#");
 					tag = Integer.parseInt(st.nextToken());
 					content = st.nextToken();
+					
 					System.out.println("tag :: " + tag);
 					System.out.println("content :: " + content);
-					
 					switch(tag) {
 						case 100 : 
 							doLogin(content);
@@ -63,7 +65,7 @@ public class ServerReader implements Runnable{
 							doRegister(content);
 							break;
 							
-						case 200:
+						case 210:
 							sendChat(content);
 							break;
 							
@@ -71,7 +73,6 @@ public class ServerReader implements Runnable{
 							System.out.println("server Reader default진입");
 							break;	
 					}
-					//ss.sendAll(msg);
 					System.out.println("==================");
 				}
 			}catch(Exception e) {
@@ -86,14 +87,18 @@ public class ServerReader implements Runnable{
 		StringTokenizer st = new StringTokenizer(content, "/");
 		String id = st.nextToken();
 		String pw = st.nextToken();
-		String result = db.doLogin(id, pw);
+		String name = db.doLogin(id, pw);
 		String tag = "";
-		if(result.equals("")) {
+		if(name.equals("")) {
 			tag = "109#";
+			ss.sendMsg(tag + name);
 		}else {
 			tag = "101#";
+			int seat = ul.countUser();
+			ul.addUser(name);
+			System.out.println("userlist >> " + ul.getUserList());
+			ss.sendMsg(tag + seat + "/" + name);
 		}
-		ss.sendMsg(tag + result);
 	}
 	
 	private void doRegister(String content) {
@@ -120,7 +125,7 @@ public class ServerReader implements Runnable{
 	
 	private void sendChat(String content) {
 		System.out.println("content > " + content);
-		String tag = "201#";
+		String tag = "211#";
 		ss.sendAll(tag + content);
 		
 	}
@@ -131,5 +136,8 @@ public class ServerReader implements Runnable{
 	}
 	public void setSender(ServerSender ss) {
 		this.ss = ss;
+	}
+	public void setUserList(UserList ul) {
+		this.ul = ul;
 	}
 }

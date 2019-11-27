@@ -25,6 +25,8 @@ public class ClientMain {
 			socket = new Socket("localhost", PORT);
 			ClientReader cr = new ClientReader(socket);
 			ClientSender cs = new ClientSender(socket);
+			
+			System.out.println(socket.getInetAddress());
 			login.setSender(cs);
 			cr.setLogin(login);
 		} catch (Exception e) {

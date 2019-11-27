@@ -2,10 +2,12 @@ package com.example.server;
 
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SocketList {
 	ArrayList<Socket> map;
 	
+	int num = 0;
 	public SocketList() {
 		map = new ArrayList<Socket>();
 	}
@@ -20,4 +22,5 @@ public class SocketList {
 	public ArrayList<Socket> getAll() {
 		return map;
 	}
+	
 }

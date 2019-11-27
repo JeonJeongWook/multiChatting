@@ -21,8 +21,6 @@ public class Connection {
 	java.sql.Connection conn = null;
 	PreparedStatement pstm = null;
 	
-	UserList ul;
-	
 	public Connection() {
 		try {
 			Class.forName(jdbc);
@@ -88,7 +86,6 @@ public class Connection {
 			if(db_pw.equals(pw)) {
 				System.out.println("비밀번호가 일치합니다");
 				result = db_id;
-				ul.addUser(db_id);
 			}else {
 				System.out.println("비밀번호가 틀렸습니다.");
 				result = "";

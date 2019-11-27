@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -39,7 +40,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		
 		p_userList.setLayout(new GridLayout(10,1));
 		for(int i=0; i<lb_users.length; i++) {
-			lb_users[i] = new JLabel(""+i);
+			lb_users[i] = new JLabel("");
 			lb_users[i].setPreferredSize(new Dimension(100, 100));
 			lb_users[i].setBorder(BorderFactory.createLineBorder(Color.yellow,2));
 			p_userList.add(lb_users[i]);
@@ -91,7 +92,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 			System.out.println("엔터키를 눌렀습니다");
 			String msg = tf_chatting.getText();
 //			ta_chatlog.append(tf_chatting.getText() + "\n");
-			cs.sendMsg("200#"+msg);
+			cs.sendMsg("210#"+msg);
 			tf_chatting.setText("");
 		}
 	}
@@ -112,5 +113,15 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	
 	public void receiveChat(String content) {
 		ta_chatlog.append(content+"\n");
+	}
+	
+	public void joinedUsers(List<String> list) {
+		for(int i=0; i<list.size(); i++) {
+			lb_users[i].setText(list.get(i));
+		}
+	}
+	
+	public void joinUser(int seat, String id) {
+		lb_users[seat].setText(id);
 	}
 }
