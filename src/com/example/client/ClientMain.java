@@ -29,6 +29,7 @@ public class ClientMain {
 			System.out.println(socket.getInetAddress());
 			login.setSender(cs);
 			cr.setLogin(login);
+			cr.setSender(cs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

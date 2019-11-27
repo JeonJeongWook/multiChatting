@@ -93,8 +93,9 @@ public class ServerReader implements Runnable{
 			tag = "109#";
 		}else {
 			tag = "101#";
+			sl.addUser(name);
 		}
-		ss.sendMsg(tag + name);
+		ss.sendAll(tag + sl.userCount() + sl.user.toString());
 	}
 	
 	private void doRegister(String content) {
@@ -133,7 +134,7 @@ public class ServerReader implements Runnable{
 	public void setSender(ServerSender ss) {
 		this.ss = ss;
 	}
-	public void setUserList(UserList ul) {
-		this.ul = ul;
+	public void setSocketList(SocketList sl) {
+		this.sl = sl;
 	}
 }

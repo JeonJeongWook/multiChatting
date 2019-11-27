@@ -14,9 +14,9 @@ public class ClientReader implements Runnable {
 	Socket socket;
 	BufferedReader br;
 	PrintWriter pw;
+	ClientSender cs;
 	public Login login;
-	
-	String nick = "";
+	public ChattingRoom chat;
 	
 	public ClientReader() {}
 	public ClientReader(Socket socket) {
@@ -85,9 +85,12 @@ public class ClientReader implements Runnable {
 	
 	public void loginAuth(String content) {
 		login.setVisible(false);
-		login.enterRoom();
-		StringTokenizer st = new StringTokenizer(content, "/");
-		
+//		login.enterRoom();
+		chat = new ChattingRoom();
+		chat.display();
+		chat.setSender(cs);
+		chat.nick = content;
+//		login.chat.nick = content;
 	}
 	
 	public void loginFail() {
@@ -100,7 +103,10 @@ public class ClientReader implements Runnable {
 	
 	//채팅 받기
 	private void receiveChat(String content) {
-		login.chat.receiveChat(content);
+		chat.receiveChat(content);
+	}
+	public void setSender(ClientSender cs) {
+		this.cs = cs;
 	}
 	
 }

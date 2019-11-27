@@ -15,6 +15,9 @@ public class SocketList {
 	public void addUser(Socket pw) {
 		map.add(pw);
 	}
+	public void addUser(String id) {
+		user.add(id);
+	}
 	public int userCount() {
 		return map.size();
 	}

@@ -33,7 +33,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public JTextArea ta_chatlog = new JTextArea();
 	public JTextField tf_chatting = new JTextField(20);
 	public JButton btn_send = new JButton("보내기");
-	
+	public String nick = "";
 	public ChattingRoom() {
 		p_chatting.setBackground(Color.blue);
 		p_userList.setBackground(Color.white);
@@ -92,7 +92,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 			System.out.println("엔터키를 눌렀습니다");
 			String msg = tf_chatting.getText();
 //			ta_chatlog.append(tf_chatting.getText() + "\n");
-			cs.sendMsg("210#"+msg);
+			cs.sendMsg("210#"+nick+msg);
 			tf_chatting.setText("");
 		}
 	}
@@ -113,15 +113,5 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	
 	public void receiveChat(String content) {
 		ta_chatlog.append(content+"\n");
-	}
-	
-	public void joinedUsers(List<String> list) {
-		for(int i=0; i<list.size(); i++) {
-			lb_users[i].setText(list.get(i));
-		}
-	}
-	
-	public void joinUser(int seat, String id) {
-		lb_users[seat].setText(id);
 	}
 }

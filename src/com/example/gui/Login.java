@@ -67,12 +67,6 @@ public class Login extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	public void enterRoom() {
-		chat = new ChattingRoom();
-		chat.display();
-		chat.setSender(cs);
-	}
-	
 	public void loginFail() {
 		JOptionPane.showMessageDialog(null, "로그인 실패");
 	}

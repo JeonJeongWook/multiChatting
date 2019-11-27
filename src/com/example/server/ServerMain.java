@@ -42,8 +42,7 @@ public class ServerMain {
 				sr.setSender(ss);
 				sr.setConnection(conn);
 				ss.setList(sl);
-				
-				sr.setUserList(ul);
+				sr.setSocketList(sl);
 			}
 			
 			
