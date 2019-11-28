@@ -59,7 +59,8 @@ public class ServerReader implements Runnable{
 					System.out.println("content :: " + content);
 					switch(tag) {
 						case 100 : 
-							doLogin(content);
+							String id = doLogin(content);
+							welcomeUser(id);
 							break;
 						case 110 :
 							doRegister(content);
@@ -85,7 +86,12 @@ public class ServerReader implements Runnable{
 		}
 	}
 	
-	private void doLogin(String content) {
+	private void welcomeUser(String id) {
+		String tag = "221#";
+		String msg = "[SYSTEM]" + id + "님이 입장하셨습니다.";
+		ss.sendAll(tag + msg);
+	}
+	private String doLogin(String content) {
 		System.out.println("login실행");
 		StringTokenizer st = new StringTokenizer(content, "/");
 		String id = st.nextToken();
@@ -100,6 +106,7 @@ public class ServerReader implements Runnable{
 		}
 		ss.sendMsg(tag + name);
 		//101#3/asd/123
+		return name;
 	}
 	
 	private void doRegister(String content) {

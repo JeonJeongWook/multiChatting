@@ -72,7 +72,9 @@ public class ClientReader implements Runnable {
 						case 211:
 							receiveChat(content);
 							break;
-							
+						case 221:
+							welcomeUser(content);
+							break;
 						default:
 							System.out.println("default 진입");
 							break;
@@ -105,11 +107,6 @@ public class ClientReader implements Runnable {
 		login.register.registerResult(content);
 	}
 	
-	//채팅 받기
-	private void receiveChat(String content) {
-		chat.receiveChat(content);
-	}
-	
 	private void setUserList(String content) {
 		System.out.println("setUserList >>> " + content);
 		StringTokenizer st = new StringTokenizer(content, "/");
@@ -119,6 +116,16 @@ public class ClientReader implements Runnable {
 			chat.lb_users[i].setText(id);
 		}
 	}
+	
+	//채팅 받기
+	private void receiveChat(String content) {
+		chat.receiveChat(content);
+	}
+	
+	private void welcomeUser(String content) {
+		chat.systemChat(content);
+	}
+	
 	
 	
 }

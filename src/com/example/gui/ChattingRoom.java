@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +35,8 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public JTextField tf_chatting = new JTextField(20);
 	public JButton btn_send = new JButton("보내기");
 	private String nick = "";
+	Font normal = new Font("굴림", Font.PLAIN, 20);
+	Font system = new Font("굴림", Font.BOLD, 20);
 	public ChattingRoom() {
 		p_chatting.setBackground(Color.blue);
 		p_userList.setBackground(Color.white);
@@ -47,6 +50,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		}
 		
 		ta_chatlog.setEditable(false);	//textarea 수정 막음
+		ta_chatlog.setFont(normal);
 		tf_chatting.addKeyListener(this);	//채팅창에서 엔터 클릭 시 기능 
 		
 		chatBar.add(tf_chatting);
@@ -63,11 +67,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		btn_send.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("보내기를 눌렀습니다");
-				String msg = tf_chatting.getText();
-//				ta_chatlog.append(tf_chatting.getText() + "\n");
-				cs.sendMsg("210#" + nick + "/" + msg);
-				tf_chatting.setText("");
+				sendMsg();
 			}
 		});
 		
@@ -90,14 +90,16 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			System.out.println("엔터키를 눌렀습니다");
-			String msg = tf_chatting.getText();
-//			ta_chatlog.append(tf_chatting.getText() + "\n");
-			cs.sendMsg("210#" + nick + "/" + msg);
-			tf_chatting.setText("");
+			sendMsg();
 		}
 	}
 
+	private void sendMsg() {
+		String msg = tf_chatting.getText();
+		cs.sendMsg("210#" + nick + "/" + msg);
+		tf_chatting.setText("");
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -116,6 +118,10 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		ta_chatlog.append(content+"\n");
 	}
 
+	public void systemChat(String content) {
+		ta_chatlog.append(content+"\n");
+	}
+	
 	public void setId(String content) {
 		this.nick = content;
 	}
