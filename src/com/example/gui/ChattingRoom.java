@@ -22,6 +22,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SpringLayout.Constraints;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.StyleConstants.FontConstants;
 
 import com.example.client.ClientSender;
 
@@ -31,12 +41,20 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public JPanel p_userList = new JPanel();
 	public JPanel chatBar = new JPanel();
 	public JLabel[] lb_users = new JLabel[10];
-	public JTextArea ta_chatlog = new JTextArea();
+//	public JTextArea ta_chatlog = new JTextArea();
 	public JTextField tf_chatting = new JTextField(20);
 	public JButton btn_send = new JButton("보내기");
-	private String nick = "";
 	Font normal = new Font("굴림", Font.PLAIN, 20);
-	Font system = new Font("굴림", Font.BOLD, 20);
+	private String nick = "";
+	
+	DefaultStyledDocument doc = new DefaultStyledDocument();
+	JTextPane tp_chatlog = new JTextPane(doc);
+	StyleContext context = new StyleContext();
+	
+	Style style = context.addStyle("system", null);
+	
+	
+	
 	public ChattingRoom() {
 		p_chatting.setBackground(Color.blue);
 		p_userList.setBackground(Color.white);
@@ -49,15 +67,17 @@ public class ChattingRoom extends JFrame implements KeyListener {
 			p_userList.add(lb_users[i]);
 		}
 		
-		ta_chatlog.setEditable(false);	//textarea 수정 막음
-		ta_chatlog.setFont(normal);
+//		ta_chatlog.setEditable(false);	//textarea 수정 막음
+//		ta_chatlog.setFont(normal);
+		
 		tf_chatting.addKeyListener(this);	//채팅창에서 엔터 클릭 시 기능 
 		
 		chatBar.add(tf_chatting);
 		chatBar.add(btn_send);
 		
 		p_chatting.setLayout(new BorderLayout());
-		p_chatting.add(ta_chatlog, BorderLayout.CENTER);
+//		p_chatting.add(ta_chatlog, BorderLayout.CENTER);
+		p_chatting.add(tp_chatlog, BorderLayout.CENTER);
 		p_chatting.add(chatBar, BorderLayout.SOUTH);
 		
 		add(p_userList,BorderLayout.EAST);
@@ -115,14 +135,30 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	}
 	
 	public void receiveChat(String content) {
-		ta_chatlog.append(content+"\n");
+//		ta_chatlog.append(content+"\n");
+		appendToPane(tp_chatlog, content, Color.BLACK);
 	}
 
 	public void systemChat(String content) {
-		ta_chatlog.append(content+"\n");
+//		ta_chatlog.append(content+"\n");
+		appendToPane(tp_chatlog, content, Color.RED);
 	}
 	
 	public void setId(String content) {
 		this.nick = content;
 	}
+	
+	private void appendToPane(JTextPane tp, String msg, Color c)
+    {
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
+
+        aset = sc.addAttribute(aset, StyleConstants.FontFamily, "돋움");
+        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+
+        int len = tp.getDocument().getLength();
+        tp.setCaretPosition(len);
+        tp.setCharacterAttributes(aset, false);
+        tp.replaceSelection(msg+"\n");
+    }
 }
