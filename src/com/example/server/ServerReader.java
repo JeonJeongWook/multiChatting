@@ -100,6 +100,7 @@ public class ServerReader implements Runnable{
 		String tag = "";
 		if(name.equals("")) {
 			tag = "109#";
+			name = "fail";
 		}else {
 			tag = "101#";
 			sl.addUser(name);

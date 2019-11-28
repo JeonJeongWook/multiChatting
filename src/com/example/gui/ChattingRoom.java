@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -43,16 +42,11 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public JLabel[] lb_users = new JLabel[10];
 	public JTextField tf_chatting = new JTextField(20);
 	public JButton btn_send = new JButton("보내기");
-	Font normal = new Font("굴림", Font.PLAIN, 20);
+	Font normal = new Font("굴림", Font.BOLD, 17);
 	private String nick = "";
 	
 	DefaultStyledDocument doc = new DefaultStyledDocument();
 	JTextPane tp_chatlog = new JTextPane(doc);
-	StyleContext context = new StyleContext();
-	
-	Style style = context.addStyle("system", null);
-	
-	
 	
 	public ChattingRoom() {
 		
@@ -64,11 +58,9 @@ public class ChattingRoom extends JFrame implements KeyListener {
 			lb_users[i] = new JLabel("");
 			lb_users[i].setPreferredSize(new Dimension(100, 100));
 			lb_users[i].setBorder(BorderFactory.createLineBorder(Color.yellow,2));
+			lb_users[i].setFont(normal);
 			p_userList.add(lb_users[i]);
 		}
-		
-//		ta_chatlog.setEditable(false);	//textarea 수정 막음
-//		ta_chatlog.setFont(normal);
 		
 		tf_chatting.addKeyListener(this);	//채팅창에서 엔터 클릭 시 기능 
 		
@@ -76,7 +68,6 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		chatBar.add(btn_send);
 		
 		p_chatting.setLayout(new BorderLayout());
-//		p_chatting.add(ta_chatlog, BorderLayout.CENTER);
 		p_chatting.add(tp_chatlog, BorderLayout.CENTER);
 		p_chatting.add(chatBar, BorderLayout.SOUTH);
 		
