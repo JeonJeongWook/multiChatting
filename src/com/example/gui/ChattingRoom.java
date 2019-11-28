@@ -55,6 +55,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	
 	
 	public ChattingRoom() {
+		
 		p_chatting.setBackground(Color.blue);
 		p_userList.setBackground(Color.white);
 		
@@ -100,8 +101,8 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	
 	public void display() {
 		System.out.println("display 실행");
-		setTitle("회원가입");
-		setBounds(100, 100, 400, 400);
+		setTitle("채팅방");
+		setBounds(100, 100, 600, 500);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -153,6 +154,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
         aset = sc.addAttribute(aset, StyleConstants.FontFamily, "돋움");
         aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_LEFT);
         aset = sc.addAttribute(aset, StyleConstants.Bold, bold);
+        aset = sc.addAttribute(aset, FontConstants.FontSize, 17);
         
         int len = tp.getDocument().getLength();
         tp.setCaretPosition(len);
