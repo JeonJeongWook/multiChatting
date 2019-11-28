@@ -88,10 +88,12 @@ public class ClientReader implements Runnable {
 	
 	
 	public void loginAuth(String content) {
+		System.out.println("loginauth id >> " + content);
 		login.setVisible(false);
 		chat = new ChattingRoom();
 		chat.display();
 		chat.setSender(cs);
+		chat.setId(content);
 		cs.sendMsg("200#setUserList");
 	}
 	

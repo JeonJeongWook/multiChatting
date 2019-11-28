@@ -98,7 +98,7 @@ public class ServerReader implements Runnable{
 			tag = "101#";
 			sl.addUser(name);
 		}
-		ss.sendMsg(tag + sl.userCount() + "/" + name);
+		ss.sendMsg(tag + name);
 		//101#3/asd/123
 	}
 	
@@ -126,9 +126,14 @@ public class ServerReader implements Runnable{
 	
 	private void sendChat(String content) {
 		System.out.println("content > " + content);
+		StringTokenizer st = new StringTokenizer(content, "/");
+		String id = st.nextToken();
+		String msg = st.nextToken();
+		
 		String tag = "211#";
 		
-		ss.sendAll(tag + content);
+		
+		ss.sendAll(tag + "[" + id + "] " + msg);
 	}
 	
 	private void getUserList() {
