@@ -80,8 +80,9 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	}
 	
 	public void display() {
+		System.out.println("display 실행");
 		setTitle("회원가입");
-		setBounds(100, 100, 1000, 700);
+		setBounds(100, 100, 400, 400);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

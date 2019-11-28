@@ -65,6 +65,9 @@ public class ServerReader implements Runnable{
 							doRegister(content);
 							break;
 							
+						case 200:
+							getUserList();
+							break;
 						case 210:
 							sendChat(content);
 							break;
@@ -95,7 +98,8 @@ public class ServerReader implements Runnable{
 			tag = "101#";
 			sl.addUser(name);
 		}
-		ss.sendAll(tag + sl.userCount() + sl.user.toString());
+		ss.sendMsg(tag + sl.userCount() + "/" + name);
+		//101#3/asd/123
 	}
 	
 	private void doRegister(String content) {
@@ -123,8 +127,15 @@ public class ServerReader implements Runnable{
 	private void sendChat(String content) {
 		System.out.println("content > " + content);
 		String tag = "211#";
-		ss.sendAll(tag + content);
 		
+		ss.sendAll(tag + content);
+	}
+	
+	private void getUserList() {
+		System.out.println("getUserList()");
+		String tag = "201#";
+		
+		ss.sendAll(tag + sl.user.size() + sl.userList());
 	}
 	
 	//setter

@@ -25,7 +25,6 @@ public class ClientReader implements Runnable {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			Thread thread = new Thread(this);
 			thread.start();
-			System.out.println("쓰레드 실행");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -34,7 +33,9 @@ public class ClientReader implements Runnable {
 	public void setLogin(Login login) {
 		this.login = login;
 	}
-	
+	public void setSender(ClientSender cs) {
+		this.cs = cs;
+	}
 	@Override
 	public void run() {
 		StringTokenizer st;
@@ -65,6 +66,9 @@ public class ClientReader implements Runnable {
 							registerResult(content);
 							break;
 							
+						case 201:
+							setUserList(content);
+							break;
 						case 211:
 							receiveChat(content);
 							break;
@@ -85,12 +89,10 @@ public class ClientReader implements Runnable {
 	
 	public void loginAuth(String content) {
 		login.setVisible(false);
-//		login.enterRoom();
 		chat = new ChattingRoom();
 		chat.display();
 		chat.setSender(cs);
-		chat.nick = content;
-//		login.chat.nick = content;
+		cs.sendMsg("200#setUserList");
 	}
 	
 	public void loginFail() {
@@ -105,8 +107,16 @@ public class ClientReader implements Runnable {
 	private void receiveChat(String content) {
 		chat.receiveChat(content);
 	}
-	public void setSender(ClientSender cs) {
-		this.cs = cs;
+	
+	private void setUserList(String content) {
+		System.out.println("setUserList >>> " + content);
+		StringTokenizer st = new StringTokenizer(content, "/");
+		int seat = Integer.parseInt(st.nextToken());
+		for(int i=0; i<seat; i++) {
+			String id = st.nextToken();
+			chat.lb_users[i].setText(id);
+		}
 	}
+	
 	
 }
