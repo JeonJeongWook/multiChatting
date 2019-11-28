@@ -41,7 +41,6 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public JPanel p_userList = new JPanel();
 	public JPanel chatBar = new JPanel();
 	public JLabel[] lb_users = new JLabel[10];
-//	public JTextArea ta_chatlog = new JTextArea();
 	public JTextField tf_chatting = new JTextField(20);
 	public JButton btn_send = new JButton("보내기");
 	Font normal = new Font("굴림", Font.PLAIN, 20);
@@ -135,27 +134,26 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	}
 	
 	public void receiveChat(String content) {
-//		ta_chatlog.append(content+"\n");
-		appendToPane(tp_chatlog, content, Color.BLACK);
+		appendToPane(tp_chatlog, content, Color.BLACK, false);
 	}
 
 	public void systemChat(String content) {
-//		ta_chatlog.append(content+"\n");
-		appendToPane(tp_chatlog, content, Color.RED);
+		appendToPane(tp_chatlog, content, Color.RED, true);
 	}
 	
 	public void setId(String content) {
 		this.nick = content;
 	}
 	
-	private void appendToPane(JTextPane tp, String msg, Color c)
+	private void appendToPane(JTextPane tp, String msg, Color c, boolean bold)
     {
         StyleContext sc = StyleContext.getDefaultStyleContext();
         AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
 
         aset = sc.addAttribute(aset, StyleConstants.FontFamily, "돋움");
-        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
-
+        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_LEFT);
+        aset = sc.addAttribute(aset, StyleConstants.Bold, bold);
+        
         int len = tp.getDocument().getLength();
         tp.setCaretPosition(len);
         tp.setCharacterAttributes(aset, false);
