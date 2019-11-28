@@ -60,8 +60,11 @@ public class ServerReader implements Runnable{
 					switch(tag) {
 						case 100 : 
 							String id = doLogin(content);
-							welcomeUser(id);
+							if(!(id.equals(""))) {
+								welcomeUser(id);
+							}
 							break;
+							
 						case 110 :
 							doRegister(content);
 							break;
@@ -86,11 +89,7 @@ public class ServerReader implements Runnable{
 		}
 	}
 	
-	private void welcomeUser(String id) {
-		String tag = "221#";
-		String msg = "[SYSTEM]" + id + "님이 입장하셨습니다.";
-		ss.sendAll(tag + msg);
-	}
+	
 	private String doLogin(String content) {
 		System.out.println("login실행");
 		StringTokenizer st = new StringTokenizer(content, "/");
@@ -100,7 +99,7 @@ public class ServerReader implements Runnable{
 		String tag = "";
 		if(name.equals("")) {
 			tag = "109#";
-			name = "fail";
+			name = "";
 		}else {
 			tag = "101#";
 			sl.addUser(name);
@@ -132,14 +131,18 @@ public class ServerReader implements Runnable{
 		ss.sendMsg(tag+msg);
 	}
 	
+	private void welcomeUser(String id) {
+		String tag = "221#";
+		String msg = "[SYSTEM]" + id + "님이 입장하셨습니다.";
+		ss.sendAll(tag + msg);
+	}
+	
 	private void sendChat(String content) {
 		System.out.println("content > " + content);
 		StringTokenizer st = new StringTokenizer(content, "/");
 		String id = st.nextToken();
 		String msg = st.nextToken();
-		
 		String tag = "211#";
-		
 		
 		ss.sendAll(tag + "[" + id + "] " + msg);
 	}

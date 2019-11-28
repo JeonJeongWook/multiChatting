@@ -41,13 +41,15 @@ public class ClientReader implements Runnable {
 		StringTokenizer st;
 		String msg = "";
 		int tag = 0;
-		String content;
+		String content = "";
 		while(true) {
 			try {
 				if((msg = br.readLine()) != null) {
 					st = new StringTokenizer(msg, "#");
 					tag = Integer.parseInt(st.nextToken());
-					content = st.nextToken();
+					System.out.println("null content >> " + st.countTokens());
+					if(st.countTokens() != 0)
+						content = st.nextToken();
 
 					System.out.println("tag :: " + tag);
 					System.out.println("content :: " + content);
