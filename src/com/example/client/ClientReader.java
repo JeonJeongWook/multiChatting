@@ -36,18 +36,19 @@ public class ClientReader implements Runnable {
 	public void setSender(ClientSender cs) {
 		this.cs = cs;
 	}
+	
 	@Override
 	public void run() {
 		StringTokenizer st;
 		String msg = "";
 		int tag = 0;
 		String content = "";
+		
 		while(true) {
 			try {
 				if((msg = br.readLine()) != null) {
 					st = new StringTokenizer(msg, "#");
 					tag = Integer.parseInt(st.nextToken());
-					System.out.println("null content >> " + st.countTokens());
 					if(st.countTokens() != 0)
 						content = st.nextToken();
 
@@ -92,7 +93,6 @@ public class ClientReader implements Runnable {
 	
 	
 	public void loginAuth(String content) {
-		System.out.println("loginauth id >> " + content);
 		login.setVisible(false);
 		chat = new ChattingRoom();
 		chat.display();
@@ -110,7 +110,6 @@ public class ClientReader implements Runnable {
 	}
 	
 	private void setUserList(String content) {
-		System.out.println("setUserList >>> " + content);
 		StringTokenizer st = new StringTokenizer(content, "/");
 		int seat = Integer.parseInt(st.nextToken());
 		for(int i=0; i<seat; i++) {

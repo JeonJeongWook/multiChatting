@@ -17,7 +17,6 @@ public class ServerMain {
 	BufferedReader br;
 	Connection conn;
 	SocketList sl;
-	UserList ul;
 	
 	public ServerMain() {
 		System.out.println("ServerMain 서버시작");
@@ -29,9 +28,9 @@ public class ServerMain {
 			conn = new Connection();
 			server = new ServerSocket(PORT);
 			sl = new SocketList();
-			ul = new UserList();
 			while(true) {
 				System.out.println("대기중");
+				System.out.println(server.isClosed());
 				Socket socket = server.accept();
 				System.out.println("연결됨");
 				

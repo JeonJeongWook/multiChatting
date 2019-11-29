@@ -14,7 +14,6 @@ public class ServerReader implements Runnable{
 	ServerSender ss;
 	Connection db;
 	SocketList sl;
-	UserList ul;
 	
 	
 	//
@@ -33,7 +32,6 @@ public class ServerReader implements Runnable{
 			Thread t = new Thread(this);
 			t.start();
 			System.out.println("Create Receive");
-			
 		} catch(SocketException se) {
 			System.out.println("disconnected");
 		}catch (Exception e) {
@@ -114,16 +112,14 @@ public class ServerReader implements Runnable{
 		StringTokenizer st = new StringTokenizer(content, "/");
 		String id = st.nextToken();
 		String pw = st.nextToken();
+		
 		String tag = "";
 		String msg = "";
-		System.out.println(id + "/" + pw);
 		int check = db.doRegister(id, pw);
 		if(check == 1) {
-			System.out.println("회원가입 완료");
 			tag = "111#";
-			msg = "success";
+			msg = "가입 성공";
 		}else {
-			System.out.println("가입 실패");
 			tag = "119#";
 			msg = "가입 실패";
 		}

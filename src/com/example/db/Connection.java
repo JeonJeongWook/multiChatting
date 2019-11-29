@@ -8,8 +8,6 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
-import com.example.server.UserList;
-
 public class Connection {
 	String jdbc = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost/multichat?serverTimezone=UTC";
