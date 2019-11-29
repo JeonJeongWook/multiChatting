@@ -1,6 +1,7 @@
 package com.example.server;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
@@ -19,9 +20,8 @@ public class ServerReader implements Runnable{
 	//
 	Socket socket;
 	BufferedReader br;
-//	String nickname = "";
-	public ServerReader() {
-	}
+	
+	public ServerReader() { }
 	public ServerReader(Socket socket) {
 		try {
 			this.socket = socket;
@@ -45,8 +45,9 @@ public class ServerReader implements Runnable{
 		int tag = 0;
 		String msg = "";
 		String content = "";
-		while(true) {
-			try {
+		boolean connect = true;
+		try {
+			while(connect) {
 				if((msg = br.readLine())!= null) {
 					System.out.println("클라이언트가 보낸 메시지 : "+ msg);
 					st = new StringTokenizer(msg, "#");
@@ -56,14 +57,14 @@ public class ServerReader implements Runnable{
 					System.out.println("tag :: " + tag);
 					System.out.println("content :: " + content);
 					switch(tag) {
-						case 100 : 
+						case 110 : 
 							String id = doLogin(content);
 							if(!(id.equals(""))) {
 								welcomeUser(id);
 							}
 							break;
 							
-						case 110 :
+						case 100 :
 							doRegister(content);
 							break;
 							
@@ -73,17 +74,21 @@ public class ServerReader implements Runnable{
 						case 210:
 							sendChat(content);
 							break;
-							
+						case 301:
+							System.out.println(content + "님이 퇴장");
+							exitUser(content);
+							break;
 						default :
-							System.out.println("server Reader default진입");
+							System.out.println("default 진입");
 							break;	
 					}
 					System.out.println("==================");
 				}
-			}catch(Exception e) {
-				e.printStackTrace();
-				break;
 			}
+		}catch(Exception e) {
+			System.out.println("SR 연결에러");
+			e.printStackTrace();
+		}finally {
 		}
 	}
 	
@@ -96,10 +101,10 @@ public class ServerReader implements Runnable{
 		String name = db.doLogin(id, pw);
 		String tag = "";
 		if(name.equals("")) {
-			tag = "109#";
+			tag = "119#";
 			name = "";
 		}else {
-			tag = "101#";
+			tag = "111#";
 			sl.addUser(name);
 		}
 		ss.sendMsg(tag + name);
@@ -117,20 +122,21 @@ public class ServerReader implements Runnable{
 		String msg = "";
 		int check = db.doRegister(id, pw);
 		if(check == 1) {
-			tag = "111#";
+			tag = "101#";
 			msg = "가입 성공";
 		}else {
-			tag = "119#";
+			tag = "109#";
 			msg = "가입 실패";
 		}
 		
 		ss.sendMsg(tag+msg);
 	}
 	
-	private void welcomeUser(String id) {
-		String tag = "221#";
-		String msg = "[SYSTEM]" + id + "님이 입장하셨습니다.";
-		ss.sendAll(tag + msg);
+	private void getUserList() {
+		System.out.println("getUserList()");
+		String tag = "201#";
+		
+		ss.sendAll(tag + sl.user.size() + sl.userList());
 	}
 	
 	private void sendChat(String content) {
@@ -143,11 +149,16 @@ public class ServerReader implements Runnable{
 		ss.sendAll(tag + "[" + id + "] " + msg);
 	}
 	
-	private void getUserList() {
-		System.out.println("getUserList()");
-		String tag = "201#";
-		
-		ss.sendAll(tag + sl.user.size() + sl.userList());
+	private void welcomeUser(String id) {
+		String tag = "300#";
+		String msg = "[SYSTEM]" + id + "님이 입장하셨습니다.";
+		ss.sendAll(tag + msg);
+	}
+	
+	private void exitUser(String id) {
+		String tag = "301#";
+		String msg = "[SYSTEM]" + id + "님이 퇴장하셨습니다.";
+		ss.sendAll(tag + msg);
 	}
 	
 	//setter

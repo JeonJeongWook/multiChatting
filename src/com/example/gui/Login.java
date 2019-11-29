@@ -4,6 +4,7 @@ package com.example.gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -46,7 +47,7 @@ public class Login extends JFrame{
 				String id = tf_id.getText();
 				String pw = tf_pw.getText();
 				System.out.println(id + "/" + pw);
-				cs.sendMsg("100#" + id + "/" + pw);
+				cs.sendMsg("110#" + id + "/" + pw);
 			}
 		});
 		btn_register.addActionListener(new ActionListener() {
@@ -71,11 +72,12 @@ public class Login extends JFrame{
 		JOptionPane.showMessageDialog(null, "로그인 실패");
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Login login = new Login();
 		login.display();
 		ClientMain cm = new ClientMain(login);
 		cm.connect();
+		System.out.println(cm.socket.toString());
 	}
 	
 	public void setSender(ClientSender cs) {

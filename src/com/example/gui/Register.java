@@ -46,7 +46,7 @@ public class Register extends JFrame{
 				System.out.println("회원가입 클릭");
 				String id = tf_id.getText();
 				String pw = tf_pw.getText();
-				cs.sendMsg("110#"+id+"/"+pw);
+				cs.sendMsg("100#"+id+"/"+pw);
 			}
 		});
 		

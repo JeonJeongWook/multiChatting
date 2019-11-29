@@ -42,8 +42,10 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public JLabel[] lb_users = new JLabel[10];
 	public JTextField tf_chatting = new JTextField(20);
 	public JButton btn_send = new JButton("보내기");
+	public JButton btn_exit = new JButton("나가기");
 	Font normal = new Font("굴림", Font.BOLD, 17);
 	private String nick = "";
+	
 	
 	DefaultStyledDocument doc = new DefaultStyledDocument();
 	JTextPane tp_chatlog = new JTextPane(doc);
@@ -66,6 +68,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		
 		chatBar.add(tf_chatting);
 		chatBar.add(btn_send);
+		chatBar.add(btn_exit);
 		
 		p_chatting.setLayout(new BorderLayout());
 		p_chatting.add(tp_chatlog, BorderLayout.CENTER);
@@ -82,10 +85,28 @@ public class ChattingRoom extends JFrame implements KeyListener {
 			}
 		});
 		
+		//[나가기]버튼
+		btn_exit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("창닫기");
+				cs.sendMsg("301#" + nick);
+				
+			}
+		});
+		
 		//창이 열리면 자동으로 텍스트 필드에 포커스를 줌
 		addWindowListener(new WindowAdapter() {
 			public void windowOpened(WindowEvent e) {
 				tf_chatting.requestFocus();
+			}
+		});
+		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.out.println("창닫기");
+				cs.sendMsg("301#" + nick);
+//				System.exit(0);
 			}
 		});
 	}

@@ -43,8 +43,8 @@ public class ClientReader implements Runnable {
 		String msg = "";
 		int tag = 0;
 		String content = "";
-		
-		while(true) {
+		boolean connection = true;
+		do {
 			try {
 				if((msg = br.readLine()) != null) {
 					st = new StringTokenizer(msg, "#");
@@ -55,17 +55,17 @@ public class ClientReader implements Runnable {
 					System.out.println("tag :: " + tag);
 					System.out.println("content :: " + content);
 					switch (tag) {
-						case 101:
+						case 111:
 							loginAuth(content);
 							break;
-						case 109:
+						case 119:
 							loginFail();
 							break;
 							
-						case 111:	//회원가입 성공
+						case 101:	//회원가입 성공
 							registerResult(content);
 							break;
-						case 119:	//회원가입 실패
+						case 109:	//회원가입 실패
 							registerResult(content);
 							break;
 							
@@ -75,9 +75,14 @@ public class ClientReader implements Runnable {
 						case 211:
 							receiveChat(content);
 							break;
-						case 221:
+							
+						case 300:
 							welcomeUser(content);
 							break;
+						case 301:
+							exitUser(content);
+							break;
+							
 						default:
 							System.out.println("default 진입");
 							break;
@@ -88,7 +93,7 @@ public class ClientReader implements Runnable {
 				e.printStackTrace();
 				break;
 			}
-		}
+		}while(connection);
 	}
 	
 	
@@ -127,6 +132,9 @@ public class ClientReader implements Runnable {
 		chat.systemChat(content);
 	}
 	
+	private void exitUser(String content) {
+		chat.systemChat(content);
+	}
 	
 	
 }
