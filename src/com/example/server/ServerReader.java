@@ -16,7 +16,6 @@ public class ServerReader implements Runnable{
 	Connection db;
 	SocketList sl;
 	
-	
 	//
 	Socket socket;
 	BufferedReader br;
@@ -75,8 +74,8 @@ public class ServerReader implements Runnable{
 							sendChat(content);
 							break;
 						case 301:
-							System.out.println(content + "님이 퇴장");
 							exitUser(content);
+							getUserList();
 							break;
 						default :
 							System.out.println("default 진입");
@@ -133,9 +132,8 @@ public class ServerReader implements Runnable{
 	}
 	
 	private void getUserList() {
-		System.out.println("getUserList()");
 		String tag = "201#";
-		
+		System.out.println(tag + sl.user.size() + sl.userList());
 		ss.sendAll(tag + sl.user.size() + sl.userList());
 	}
 	
@@ -155,10 +153,17 @@ public class ServerReader implements Runnable{
 		ss.sendAll(tag + msg);
 	}
 	
-	private void exitUser(String id) {
+	private void exitUser(String content) {
+		System.out.println("eixtUser method >> " + content);
+		
 		String tag = "301#";
+		StringTokenizer st = new StringTokenizer(content, "/");
+		String id = st.nextToken();
+		
 		String msg = "[SYSTEM]" + id + "님이 퇴장하셨습니다.";
+		
 		ss.sendAll(tag + msg);
+		sl.deleteUser(id);
 	}
 	
 	//setter

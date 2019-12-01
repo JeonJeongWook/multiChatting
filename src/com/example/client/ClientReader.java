@@ -18,6 +18,8 @@ public class ClientReader implements Runnable {
 	public Login login;
 	public ChattingRoom chat;
 	
+	boolean connection = true;
+	
 	public ClientReader() {}
 	public ClientReader(Socket socket) {
 		this.socket = socket;
@@ -43,7 +45,6 @@ public class ClientReader implements Runnable {
 		String msg = "";
 		int tag = 0;
 		String content = "";
-		boolean connection = true;
 		do {
 			try {
 				if((msg = br.readLine()) != null) {
@@ -81,6 +82,8 @@ public class ClientReader implements Runnable {
 							break;
 						case 301:
 							exitUser(content);
+							
+							socket.close();
 							break;
 							
 						default:
@@ -103,6 +106,7 @@ public class ClientReader implements Runnable {
 		chat.display();
 		chat.setSender(cs);
 		chat.setId(content);
+		chat.setSocket(socket);
 		cs.sendMsg("200#setUserList");
 	}
 	
@@ -115,6 +119,7 @@ public class ClientReader implements Runnable {
 	}
 	
 	private void setUserList(String content) {
+		chat.setUserNull();
 		StringTokenizer st = new StringTokenizer(content, "/");
 		int seat = Integer.parseInt(st.nextToken());
 		for(int i=0; i<seat; i++) {
@@ -134,7 +139,6 @@ public class ClientReader implements Runnable {
 	
 	private void exitUser(String content) {
 		chat.systemChat(content);
+		connection = false;
 	}
-	
-	
 }

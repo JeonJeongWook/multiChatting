@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.Socket;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -45,6 +46,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public JButton btn_exit = new JButton("나가기");
 	Font normal = new Font("굴림", Font.BOLD, 17);
 	private String nick = "";
+	private Socket socket;
 	
 	
 	DefaultStyledDocument doc = new DefaultStyledDocument();
@@ -90,8 +92,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("창닫기");
-				cs.sendMsg("301#" + nick);
-				
+				exit();
 			}
 		});
 		
@@ -105,8 +106,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.out.println("창닫기");
-				cs.sendMsg("301#" + nick);
-//				System.exit(0);
+				exit();
 			}
 		});
 	}
@@ -157,6 +157,9 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	public void setId(String content) {
 		this.nick = content;
 	}
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
 	
 	private void appendToPane(JTextPane tp, String msg, Color c, boolean bold)
     {
@@ -173,4 +176,16 @@ public class ChattingRoom extends JFrame implements KeyListener {
         tp.setCharacterAttributes(aset, false);
         tp.replaceSelection(msg+"\n");
     }
+	
+	private void exit() {
+		cs.sendMsg("301#" + nick + "/" + socket);
+		System.exit(0);
+	}
+	
+	public void setUserNull() {
+		System.out.println("setUserNull 실행");
+		for(int i=0; i<10; i++) {
+			lb_users[i].setText("");
+		}
+	}
 }

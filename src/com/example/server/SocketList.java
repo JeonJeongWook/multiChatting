@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SocketList {
+	int findKey = 0;
 	ArrayList<Socket> map;
 	ArrayList<String> user;
 	
@@ -16,9 +17,19 @@ public class SocketList {
 	public void addUser(Socket pw) {
 		map.add(pw);
 	}
-	
 	public void addUser(String id) {
 		user.add(id);
+	}
+	
+	public void deleteUser(String id) {
+		for(int i=0; i<user.size();i++) {
+			if(user.get(i).equals(id)) {
+				System.out.println(i+"번째 값이에요!");
+				findKey = i;
+			}
+		}
+		user.remove(findKey);
+		map.remove(findKey);
 	}
 	
 	public int userCount() {
@@ -34,7 +45,6 @@ public class SocketList {
 		for(int i=0; i<user.size(); i++) {
 			userList += "/" + user.get(i);
 		}
-		System.out.println("userList :: " + userList);
 		return userList;
 	}
 }
