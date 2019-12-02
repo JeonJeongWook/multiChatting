@@ -127,8 +127,10 @@ public class ChattingRoom extends JFrame implements KeyListener {
 
 	private void sendMsg() {
 		String msg = tf_chatting.getText();
-		cs.sendMsg("210#" + nick + "/" + msg);
-		tf_chatting.setText("");
+		if(!(msg.equals(""))) {
+			cs.sendMsg("210#" + nick + "/" + msg);
+			tf_chatting.setText("");
+		}
 	}
 	
 	@Override
