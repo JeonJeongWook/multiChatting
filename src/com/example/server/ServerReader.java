@@ -155,13 +155,13 @@ public class ServerReader implements Runnable{
 	}
 	
 	private void exitUser(String id) {
-		String tag = "301#";
+		String tag = "300#";
 		
 		String msg = "[SYSTEM]" + id + "님이 퇴장하셨습니다.";
 		
 		ss.sendAll(tag + msg);
-//		sl.deleteUser(id);
-//		ss.setList(sl);
+		sl.deleteUser(id);
+		ss.setList(sl);
 	}
 	
 	//setter

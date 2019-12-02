@@ -78,12 +78,12 @@ public class ClientReader implements Runnable {
 							break;
 							
 						case 300:
-							welcomeUser(content);
+							systemChat(content);
 							break;
 						case 301:
-							exitUser(content);
-							
-							socket.close();
+							systemChat(content);
+							exitUser();
+							this.socket.close();
 							break;
 							
 						default:
@@ -134,12 +134,11 @@ public class ClientReader implements Runnable {
 		chat.receiveChat(content);
 	}
 	
-	private void welcomeUser(String content) {
+	private void systemChat(String content) {
 		chat.systemChat(content);
 	}
 	
-	private void exitUser(String content) {
-		chat.systemChat(content);
+	private void exitUser() {
 		connection = false;
 	}
 }

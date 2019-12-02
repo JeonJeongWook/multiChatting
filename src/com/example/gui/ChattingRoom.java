@@ -180,6 +180,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	
 	private void exit() {
 		cs.sendMsg("301#" + nick);
+		this.setVisible(false);
 //		System.exit(0);
 	}
 	

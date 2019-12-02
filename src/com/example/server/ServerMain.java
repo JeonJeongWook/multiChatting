@@ -30,7 +30,6 @@ public class ServerMain {
 			sl = new SocketList();
 			while(true) {
 				System.out.println("대기중");
-				System.out.println(server.isClosed());
 				Socket socket = server.accept();
 				System.out.println("연결됨");
 				
