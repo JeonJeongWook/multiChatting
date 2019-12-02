@@ -105,7 +105,6 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				System.out.println("창닫기");
 				exit();
 			}
 		});
@@ -178,8 +177,8 @@ public class ChattingRoom extends JFrame implements KeyListener {
     }
 	
 	private void exit() {
-		cs.sendMsg("301#" + nick + "/" + socket);
-		System.exit(0);
+		cs.sendMsg("301#" + nick);
+//		System.exit(0);
 	}
 	
 	public void setUserNull() {

@@ -1,3 +1,2 @@
-socket 통신 프로그램
-client 에서 나가기 누르면 소켓 얻어와서 server SocketList에 제거 하기 
+socket 통신 프로그램 
 나가기에서 채팅방 유저목록에서 안지워짐 

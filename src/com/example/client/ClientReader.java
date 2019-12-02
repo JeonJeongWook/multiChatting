@@ -83,7 +83,7 @@ public class ClientReader implements Runnable {
 						case 301:
 							exitUser(content);
 							
-							socket.close();
+//							socket.close();
 							break;
 							
 						default:
@@ -123,6 +123,7 @@ public class ClientReader implements Runnable {
 		StringTokenizer st = new StringTokenizer(content, "/");
 		int seat = Integer.parseInt(st.nextToken());
 		for(int i=0; i<seat; i++) {
+			System.out.println("i : " + i + " / seat : " + seat);
 			String id = st.nextToken();
 			chat.lb_users[i].setText(id);
 		}
@@ -139,6 +140,6 @@ public class ClientReader implements Runnable {
 	
 	private void exitUser(String content) {
 		chat.systemChat(content);
-		connection = false;
+//		connection = false;
 	}
 }

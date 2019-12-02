@@ -73,6 +73,7 @@ public class ServerReader implements Runnable{
 						case 210:
 							sendChat(content);
 							break;
+							
 						case 301:
 							exitUser(content);
 							getUserList();
@@ -133,7 +134,7 @@ public class ServerReader implements Runnable{
 	
 	private void getUserList() {
 		String tag = "201#";
-		System.out.println(tag + sl.user.size() + sl.userList());
+//		System.out.println(tag + sl.user.size() + sl.userList());
 		ss.sendAll(tag + sl.user.size() + sl.userList());
 	}
 	
@@ -153,17 +154,14 @@ public class ServerReader implements Runnable{
 		ss.sendAll(tag + msg);
 	}
 	
-	private void exitUser(String content) {
-		System.out.println("eixtUser method >> " + content);
-		
+	private void exitUser(String id) {
 		String tag = "301#";
-		StringTokenizer st = new StringTokenizer(content, "/");
-		String id = st.nextToken();
 		
 		String msg = "[SYSTEM]" + id + "님이 퇴장하셨습니다.";
 		
 		ss.sendAll(tag + msg);
-		sl.deleteUser(id);
+//		sl.deleteUser(id);
+//		ss.setList(sl);
 	}
 	
 	//setter
