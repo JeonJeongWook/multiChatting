@@ -77,6 +77,7 @@ public class ServerReader implements Runnable{
 						case 301:
 							exitUser(content);
 							getUserList();
+							connect = false;
 							break;
 						default :
 							System.out.println("default 진입");
