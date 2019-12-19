@@ -23,11 +23,11 @@ public class ClientMain {
 	}
 	public void connect() {
 		try {
-			socket = new Socket("localhost", PORT);
+			socket = new Socket("192.168.0.10", PORT);
 			ClientReader cr = new ClientReader(socket);
 			ClientSender cs = new ClientSender(socket);
 			
-//			System.out.println(socket.getInetAddress());
+			System.out.println(socket.getInetAddress());
 			login.setSender(cs);
 			cr.setLogin(login);
 			cr.setSender(cs);
