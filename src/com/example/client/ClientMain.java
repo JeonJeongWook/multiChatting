@@ -27,7 +27,7 @@ public class ClientMain {
 	}
 	public void connect() {
 		try {
-			socket = new Socket("localhost", PORT);
+			socket = new Socket("112.76.111.50", PORT);
 			ClientReader cr = new ClientReader(socket);
 			ClientSender cs = new ClientSender(socket);
 			
