@@ -21,6 +21,9 @@ public class ClientMain {
 	
 	public ClientMain(Login login) {
 		this.login = login;
+		login.setClientMain(this);
+		login.display();
+		connect();
 	}
 	public void connect() {
 		try {

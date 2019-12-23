@@ -17,6 +17,7 @@ import com.example.client.ClientMain;
 import com.example.client.ClientSender;
 
 public class Login extends JFrame{
+	ClientMain cm;
 	ClientSender cs;
 	public Register register;
 	public ChattingRoom chat;
@@ -74,14 +75,17 @@ public class Login extends JFrame{
 	
 	public static void main(String[] args) throws IOException {
 		Login login = new Login();
-		login.display();
+//		login.display();
 		ClientMain cm = new ClientMain(login);
 		cm.setClient(cm);
-		cm.connect();
+//		cm.connect();
 		System.out.println(cm.socket.toString());
 	}
 	
 	public void setSender(ClientSender cs) {
 		this.cs = cs;
+	}
+	public void setClientMain(ClientMain cm) {
+		this.cm = cm;
 	}
 }
