@@ -9,6 +9,7 @@ import com.example.gui.Login;
 
 public class ClientMain {
 	private static final int PORT = 13579;
+	private ClientMain cm;
 	public Socket socket;
 	PrintWriter pw;
 	BufferedReader br;
@@ -23,7 +24,7 @@ public class ClientMain {
 	}
 	public void connect() {
 		try {
-			socket = new Socket("192.168.0.10", PORT);
+			socket = new Socket("localhost", PORT);
 			ClientReader cr = new ClientReader(socket);
 			ClientSender cs = new ClientSender(socket);
 			
@@ -34,5 +35,9 @@ public class ClientMain {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setClient(ClientMain cm) {
+		this.cm = cm;
 	}
 }

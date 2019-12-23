@@ -76,6 +76,7 @@ public class Login extends JFrame{
 		Login login = new Login();
 		login.display();
 		ClientMain cm = new ClientMain(login);
+		cm.setClient(cm);
 		cm.connect();
 		System.out.println(cm.socket.toString());
 	}
