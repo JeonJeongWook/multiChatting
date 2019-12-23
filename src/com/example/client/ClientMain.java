@@ -10,6 +10,7 @@ import com.example.gui.Login;
 public class ClientMain {
 	private static final int PORT = 13579;
 	private ClientMain cm;
+	private ClientSender cs;
 	public Socket socket;
 	PrintWriter pw;
 	BufferedReader br;
@@ -23,11 +24,12 @@ public class ClientMain {
 		this.login = login;
 		login.setClientMain(this);
 		login.display();
+		login.setSender(cs);
 		connect();
 	}
 	public void connect() {
 		try {
-			socket = new Socket("112.76.111.50", PORT);
+			socket = new Socket("192.168.0.10", PORT);
 			ClientReader cr = new ClientReader(socket);
 			ClientSender cs = new ClientSender(socket);
 			
