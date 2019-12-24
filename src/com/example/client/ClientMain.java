@@ -29,8 +29,7 @@ public class ClientMain {
 	}
 	public void connect() {
 		try {
-			socket = new Socket("192.168.0.10", PORT);
-//			socket = new Socket("172.16.52.39", PORT);
+			socket = new Socket("192.168.0.10", PORT);	//내 자리 공유기
 			ClientReader cr = new ClientReader(socket);
 			ClientSender cs = new ClientSender(socket);
 			
