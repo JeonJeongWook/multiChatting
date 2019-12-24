@@ -18,10 +18,10 @@ public class Register extends JFrame{
 	public JPanel panel = new JPanel();
 	public JLabel lb_id = new JLabel("아이디");
 	public JLabel lb_pw = new JLabel("패스워드");
-	public JLabel lb_pwCheck = new JLabel("패스워드 체크");
+//	public JLabel lb_pwCheck = new JLabel("패스워드 체크");
 	public JTextField tf_id = new JTextField(10);
 	public JTextField tf_pw = new JTextField(10);
-	public JTextField tf_pwCheck = new JTextField(10);
+//	public JTextField tf_pwCheck = new JTextField(10);
 	public JButton btn_register = new JButton("회원가입");
 	public JButton btn_back = new JButton("돌아가기");
 	public Register(){
@@ -32,8 +32,8 @@ public class Register extends JFrame{
 		panel.add(lb_pw);
 		panel.add(tf_pw);
 		
-		panel.add(lb_pwCheck);
-		panel.add(tf_pwCheck);
+//		panel.add(lb_pwCheck);
+//		panel.add(tf_pwCheck);
 		
 		panel.add(btn_register);
 		panel.add(btn_back);

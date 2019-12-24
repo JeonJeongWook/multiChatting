@@ -116,6 +116,7 @@ public class ClientReader implements Runnable {
 	
 	public void registerResult(String content) {
 		login.register.registerResult(content);
+		login.register.setVisible(false);
 	}
 	
 	private void setUserList(String content) {
