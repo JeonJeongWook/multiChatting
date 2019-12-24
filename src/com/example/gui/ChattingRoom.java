@@ -20,6 +20,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -51,6 +53,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	
 	DefaultStyledDocument doc = new DefaultStyledDocument();
 	JTextPane tp_chatlog = new JTextPane(doc);
+	JScrollPane sp = new JScrollPane(tp_chatlog);
 	
 	public ChattingRoom() {
 		
@@ -61,7 +64,7 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		for(int i=0; i<lb_users.length; i++) {
 			lb_users[i] = new JLabel("");
 			lb_users[i].setPreferredSize(new Dimension(100, 100));
-			lb_users[i].setBorder(BorderFactory.createLineBorder(Color.yellow,2));
+			lb_users[i].setBorder(BorderFactory.createLineBorder(Color.black,1));
 			lb_users[i].setFont(normal);
 			p_userList.add(lb_users[i]);
 		}
@@ -73,7 +76,8 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		chatBar.add(btn_exit);
 		
 		p_chatting.setLayout(new BorderLayout());
-		p_chatting.add(tp_chatlog, BorderLayout.CENTER);
+//		p_chatting.add(tp_chatlog, BorderLayout.CENTER);
+		p_chatting.add(sp, BorderLayout.CENTER);
 		p_chatting.add(chatBar, BorderLayout.SOUTH);
 		
 		add(p_userList,BorderLayout.EAST);
