@@ -56,7 +56,6 @@ public class ChattingRoom extends JFrame implements KeyListener {
 	JScrollPane sp = new JScrollPane(tp_chatlog);
 	
 	public ChattingRoom() {
-		
 		p_chatting.setBackground(Color.blue);
 		p_userList.setBackground(Color.white);
 		
@@ -76,7 +75,6 @@ public class ChattingRoom extends JFrame implements KeyListener {
 		chatBar.add(btn_exit);
 		
 		p_chatting.setLayout(new BorderLayout());
-//		p_chatting.add(tp_chatlog, BorderLayout.CENTER);
 		p_chatting.add(sp, BorderLayout.CENTER);
 		p_chatting.add(chatBar, BorderLayout.SOUTH);
 		

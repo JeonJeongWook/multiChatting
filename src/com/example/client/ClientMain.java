@@ -29,11 +29,10 @@ public class ClientMain {
 	}
 	public void connect() {
 		try {
-			socket = new Socket("192.168.0.10", PORT);	//내 자리 공유기
+			socket = new Socket("localhost", PORT);	//연결 하려는 아이피 작성
 			ClientReader cr = new ClientReader(socket);
 			ClientSender cs = new ClientSender(socket);
 			
-			System.out.println(socket.getInetAddress());
 			login.setSender(cs);
 			cr.setLogin(login);
 			cr.setSender(cs);

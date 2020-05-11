@@ -50,6 +50,7 @@ public class Register extends JFrame{
 			}
 		});
 		
+		//돌아가기 버튼
 		btn_back.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
